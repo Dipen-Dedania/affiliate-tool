@@ -18,14 +18,15 @@ type Item struct {
 
 // Display all items
 func GetItems(w http.ResponseWriter, r *http.Request) {
-	client, err := amazon.NewFromEnvionment()
+	client, err := amazon.New("**", "**", "ngsio-22", amazon.RegionIndia)
 	if err != nil {
 		log.Fatal(err)
 	}
 	res, err := client.ItemSearch(amazon.ItemSearchParameters{
-		SearchIndex: amazon.SearchIndexBooks,
-		Keywords:    "Go 言語",
+		SearchIndex: amazon.SearchIndexAll,
+		Keywords:    "watch",
 	}).Do()
+
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -36,7 +37,7 @@ func GetItems(w http.ResponseWriter, r *http.Request) {
 [URL]   %v
 `, item.ItemAttributes.Title, item.DetailPageURL)
 	}
-	json.NewEncoder(w).Encode(items)
+	json.NewEncoder(w).Encode(res.Items)
 }
 
 func main() {
@@ -46,10 +47,3 @@ func main() {
 	router.HandleFunc("/items", GetItems).Methods("GET")
 	http.ListenAndServe(":3030", router)
 }
-
-
-// Configuration
-//export AWS_ACCESS_KEY_ID=${YOUR_AWS_ACCESS_KEY_ID}
-//export AWS_SECRET_ACCESS_KEY=${YOUR_AWS_SECRET_ACCESS_KEY}
-//export AWS_PRODUCT_REGION=JP
-//export AWS_ASSOCIATE_TAG=ngsio-22
