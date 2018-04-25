@@ -7,6 +7,7 @@ import (
 	"github.com/ngs/go-amazon-product-advertising-api/amazon"
 	"fmt"
 	"encoding/json"
+	"os"
 )
 
 var items []Item
@@ -43,7 +44,11 @@ func GetItems(w http.ResponseWriter, r *http.Request) {
 func main() {
 	// set Router
 	router := mux.NewRouter()
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "3030"
+	}
 	router.Handle("/", http.FileServer(http.Dir("./view")))
 	router.HandleFunc("/items", GetItems).Methods("GET")
-	http.ListenAndServe(":3030", router)
+	http.ListenAndServe(":" + port, router)
 }
