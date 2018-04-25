@@ -1,0 +1,16 @@
+{
+	"ImportPath": "github.com/affiliate-tool",
+	"GoVersion": "go1.10",
+	"GodepVersion": "v80",
+	"Deps": [
+		{
+			"ImportPath": "github.com/gorilla/mux",
+			"Comment": "v1.6.1-15-gb57cb16",
+			"Rev": "b57cb1605fd11ba2ecfa7f68992b4b9cc791934d"
+		},
+		{
+			"ImportPath": "github.com/ngs/go-amazon-product-advertising-api/amazon",
+			"Rev": "61566202d7a2a0e9cd8b36c4208b6f96b72ccf2b"
+		}
+	]
+}
